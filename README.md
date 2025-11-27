@@ -1,30 +1,41 @@
-# 💬 Real-Time Chat Application
+# 💬 MERN Real-Time Chat Application
 
-A **real-time chat platform** built using **Node.js**, **Express**, and **Socket.IO**, enabling instant, bi-directional communication between users. The application provides a smooth and interactive chatting experience with responsive design and dynamic updates.
+A robust full-stack **real-time chat platform** built using the **MERN Stack** (MongoDB, Express, React, Node.js).  
+This application goes beyond simple socket connections by offering **secure authentication**, **persistent chat history**, and a **modern UI**.
 
 ---
 
 ## 🚀 Features
 
-- ⚡ **Real-Time Messaging:** Built with **Socket.IO** for instant, bi-directional communication.  
-- 🔐 **User Authentication:** Unique socket IDs and dynamic username mapping for each session.  
-- 🧑‍💻 **Dynamic User Interface:** Real-time DOM updates and animations using **jQuery**.  
-- 🎨 **Responsive Design:** Styled with **Bootstrap** for a clean and adaptive layout.  
-- 💬 **Instant Chat Updates:** Smooth message flow.  
+- ⚡ **Real-Time Chat** using Socket.IO (bi-directional messaging)
+- 🔐 **Secure Authentication** using JWT & Bcrypt
+- 💾 **Persistent Message History** stored in MongoDB
+- 🎨 **Modern UI/UX** using React (Vite) + Tailwind CSS
+- 📜 **Auto-Scroll** to latest messages
+- 👥 **Different UI for sender & receiver**
+- 📱 **Fully Responsive Design**
 
 ---
 
 ## 🧰 Tech Stack
 
-| Category | Technologies |
-|-----------|--------------|
-| **Frontend** | HTML, CSS, jQuery, Bootstrap |
-| **Backend** | Node.js, Express.js |
-| **Real-Time Communication** | Socket.IO |
-| **Authentication** | Custom socket-based user mapping |
-| **Deployment** | Render |
+| Category      | Technologies |
+|--------------|--------------|
+| **Frontend** | React.js (Vite), Tailwind CSS, Axios, Socket.IO Client |
+| **Backend**  | Node.js, Express.js |
+| **Database** | MongoDB, Mongoose |
+| **Real-Time** | Socket.IO |
+| **Auth**     | JWT (JSON Web Tokens), Bcryptjs |
+| **Deployment** | Render / Vercel |
 
 ---
+
+## ⚙️ Installation & Setup
+
+This project has two parts: **Backend (Server)** and **Frontend (Client)**.
+
+---
+
 
 ## 🌐 Deployment
 
