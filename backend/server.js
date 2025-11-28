@@ -6,15 +6,21 @@ const cors = require('cors')
 const socketIo = require('socket.io')
 
 const authRoutes = require('./routes/auth')
-const { userInfo } = require('os')
-const { time, timeStamp } = require('console')
+
+const messageRoutes = require('./routes/message')
+const Message = require('./models/Message')
 
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
 // middleware
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+    origin: "*",  // Allow all origins
+    credentials: true
+}));
+
 app.use(express.json());
 
 // db
@@ -24,6 +30,10 @@ mongoose.connect(process.env.MONGO_URI)
 
 // routes
 app.use('/api/auth', authRoutes);
+
+// to get chat history
+app.use('/api/messages', messageRoutes)
+  
 
 
 const io = socketIo(server, {
@@ -41,13 +51,23 @@ io.on('connection', (socket) => {
         console.log(`${username} joined the chat`)
     })
 
-    socket.on('send_msg', (data) => {
-        console.log("Server received:", data);
-        io.emit('received_msg', {
-            msg: data.msg,
-            username: socket.username,
-            timestamp: new Date().toLocaleTimeString()
-        })
+    // save to db before emitting
+    socket.on('send_msg', async (data) => {
+        try {
+            const newMessage = new Message({
+                username: data.username,
+                msg: data.msg,
+                time: data.time
+            });
+
+            // save to db
+            const savedMessage = await newMessage.save();
+        
+            // console.log("Server received:", data);
+            io.emit('received_msg', savedMessage) // broadcast the saved msg to all clients
+        } catch (err) {
+            console.error("Error saving message:", err);
+        }
     })
 })
 

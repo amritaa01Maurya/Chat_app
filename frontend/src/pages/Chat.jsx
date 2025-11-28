@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
+import axios from "axios";
 
 let socket;
 
@@ -15,10 +16,17 @@ function Chat({ username, handleLogout }) {
       console.log("✅ Connected to server with ID:", socket.id);
     });
 
+    // fetch chat history from backend
+    axios.get("http://localhost:5000/api/messages/")
+      .then((res) => {
+        setChat(res.data); // load previous messages
+      })
+      .catch((err) => console.log("Error loading history:", err));
+
     socket.emit("join_room", username);
 
     socket.on("received_msg", (data) => {
-      console.log("📩 Message received from server:", data);
+      // console.log("📩 Message received from server:", data);
       setChat((prev) => [...prev, data]);
     });
 
