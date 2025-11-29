@@ -14,11 +14,17 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
+const allowedOrigins = [
+  'http://localhost:5173',   // local dev frontend
+  "http://localhost:5174",                 
+  process.env.CLIENT_URL  // deployed frontend
+];
+
 // middleware
 // app.use(cors());
 app.use(cors({
-    origin: "*",  // Allow all origins
-    credentials: true
+  origin: allowedOrigins,
+  credentials: true
 }));
 
 app.use(express.json());
@@ -38,7 +44,7 @@ app.use('/api/messages', messageRoutes)
 
 const io = socketIo(server, {
     cors: {
-        origin: "*", // allow all origins
+        origin: allowedOrigins,
         methods: ["GET", "POST"]
     }
 });
@@ -71,7 +77,7 @@ io.on('connection', (socket) => {
     })
 })
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 })

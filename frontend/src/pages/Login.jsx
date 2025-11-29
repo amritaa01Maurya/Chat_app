@@ -9,19 +9,22 @@ function Login({ setToken, setUsername }) {
     password: ""
   });
 
+  const API_URL = import.meta.env.VITE_API_URL
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     // Use environment variable in real app, hardcoded for now
     const endpoint = isLogin 
-      ? "http://localhost:5000/api/auth/login" 
-      : "http://localhost:5000/api/auth/signup";
+      ? `${API_URL}/api/auth/login` 
+      : `${API_URL}/api/auth/signup`;
 
     try {
-      const res = await axios.post(endpoint, formData);
+      const res = await axios.post(endpoint, formData, {withCredentials: true});
       if (isLogin) {
         const { token, user } = res.data;
         localStorage.setItem("token", token);

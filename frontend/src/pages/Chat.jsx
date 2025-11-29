@@ -10,14 +10,19 @@ function Chat({ username, handleLogout }) {
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    socket = io("http://localhost:5000");
+    const API_URL = import.meta.env.VITE_API_URL
+    socket = io(API_URL, { 
+      transports: ['websocket'] 
+    });
+
+    console.log("🔌 Attempting to connect to server...", API_URL);
 
     socket.on("connect", () => {
       console.log("✅ Connected to server with ID:", socket.id);
     });
 
     // fetch chat history from backend
-    axios.get("http://localhost:5000/api/messages/")
+    axios.get(`${API_URL}/api/messages/`)
       .then((res) => {
         setChat(res.data); // load previous messages
       })
