@@ -9,8 +9,9 @@ function Chat({ username, handleLogout }) {
   const [chat, setChat] = useState([]);
   const bottomRef = useRef(null);
 
+  const API_URL = import.meta.env.VITE_API_URL
+
   useEffect(() => {
-    const API_URL = import.meta.env.VITE_API_URL
     socket = io(API_URL, { 
       transports: ['websocket'] 
     });
@@ -36,7 +37,7 @@ function Chat({ username, handleLogout }) {
     });
 
     return () => socket.disconnect();
-  }, [username]);
+  }, [username, API_URL]);
 
   // Auto-scroll logic
   useEffect(() => {
@@ -55,17 +56,27 @@ function Chat({ username, handleLogout }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="w-full max-w-2xl bg-white rounded-lg shadow-xl overflow-hidden flex flex-col h-[80vh]">
+    <div className="flex flex-col items-center justify-center h-[100dvh] bg-gray-100 md:p-4">
+      <div className="w-full h-full md:max-w-2xl md:h-[85vh] bg-white md:rounded-lg shadow-xl overflow-hidden flex flex-col">
         
         {/* Header */}
-        <div className="bg-gray-800 p-4 flex justify-between items-center text-white">
+        <div className="bg-gray-800 p-4 flex justify-between items-center text-white shrink-0">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="font-semibold">Live Chat: {username}</span>
+            <span className="font-semibold">Chat: {username}</span>
           </div>
-          <button onClick={handleLogout} className="text-sm bg-red-500 px-3 py-1 rounded hover:bg-red-600">
-            Logout
+          <button onClick={handleLogout} className="text-sm bg-red-400 px-3 py-1 rounded hover:bg-red-600">
+            <span className="hidden md:inline text-sm">Logout</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                strokeWidth={2} 
+                stroke="currentColor" 
+                className="w-5 h-5 md:hidden" // visible on mobile only
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />              
+              </svg>
           </button>
         </div>
 
@@ -93,14 +104,15 @@ function Chat({ username, handleLogout }) {
           <div className="flex space-x-2">
             <input
               type="text"
-              className="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+              className="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm md:text-base min-w-0"
               placeholder="Type a message..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && sendMessage()}
             />
-            <button onClick={sendMessage} className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 font-semibold shadow">
-              Send
+            <button onClick={sendMessage} className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-600 font-semibold shadow">
+              <span className="hidden md:inline">Send</span>
+              <span className="md:hidden">➤</span>
             </button>
           </div>
         </div>
