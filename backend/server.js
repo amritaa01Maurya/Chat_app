@@ -29,6 +29,20 @@ app.use(cors({
 
 app.use(express.json());
 
+// socket.io setup
+const io = socketIo(server, {
+    cors: {
+        origin: allowedOrigins,
+        methods: ["GET", "POST"]
+    }
+});
+
+// middleware to make io accessible in routes
+app.use((req, res, next) => {
+    req.io = io;
+    next();
+});
+
 // db
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("MongoDB Connected"))
@@ -37,17 +51,9 @@ mongoose.connect(process.env.MONGO_URI)
 // routes
 app.use('/api/auth', authRoutes);
 
-// to get chat history
+// message routes
 app.use('/api/messages', messageRoutes)
   
-
-
-const io = socketIo(server, {
-    cors: {
-        origin: allowedOrigins,
-        methods: ["GET", "POST"]
-    }
-});
 
 io.on('connection', (socket) => {
     console.log(`Socket connected: ${socket.id}`)

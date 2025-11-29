@@ -18,7 +18,8 @@ function Login({ setToken, setUsername }) {
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-    // Use environment variable in real app, hardcoded for now
+
+    // check environment variable (for API URL)
     const endpoint = isLogin 
       ? `${API_URL}/api/auth/login` 
       : `${API_URL}/api/auth/signup`;
