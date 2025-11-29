@@ -26,17 +26,15 @@ This application goes beyond simple socket connections by offering **secure auth
 | **Database** | MongoDB, Mongoose |
 | **Real-Time** | Socket.IO |
 | **Auth**     | JWT (JSON Web Tokens), Bcryptjs |
-| **Deployment** | Render / Vercel |
+| **Deployment** | Render |
 
 ---
 
 
 ## 🌐 Deployment
 
-🔗 **Live Demo:** [https://chat-app-lv4j.onrender.com](https://chat-app-lv4j.onrender.com)  
-🚧 Deployment Under Maintenance  
-The full-stack chat app is currently being re-deployed due to a backend hosting issue.  
-Please check the source code meanwhile. The project will be live again soon.
+🔗 **Live Demo:** [https://chat-app-1-m8gz.onrender.com](https://chat-app-1-m8gz.onrender.com)  
+
 
 📦 **Repository:** [https://github.com/amritaa01Maurya/Chat_app.git](https://github.com/amritaa01Maurya/Chat_app.git)
 
